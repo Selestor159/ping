@@ -8,32 +8,31 @@ namespace NetworkMonitor
     {
         static void Main(string[] args)
         {
-            // IP-адрес или хост для мониторинга
+
             string target = "google.com";
 
-            // Опции отправки письма
+
             string emailFrom = "selestor379@mail.ru"; // Адрес отправителя
             string emailTo = "nikitaefimenko496@mail.ru"; // Адрес получателя
-            string emailSubject = "Network Monitoring Alert"; // Тема письма
-            string emailBody = "The target network resource is unavailable."; // Текст письма
+            string emailSubject = "Алерт о пинге"; // Тема письма
+            string emailBody = "Что-то не работает короче."; // Текст письма
 
-            // Бесконечный цикл мониторинга
+
             while (true)
             {
                 bool isPingSuccessful = PingHost(target);
 
-                // Если ping неуспешный, отправляем уведомление по почте
                 if (!isPingSuccessful)
                 {
                     SendEmail(emailFrom, emailTo, emailSubject, emailBody);
                 }
 
-                // Ожидаем некоторое время перед повторной проверкой
-                System.Threading.Thread.Sleep(5000); // В данном примере проверка будет выполняться каждые 5 секунд
+                
+                System.Threading.Thread.Sleep(5000); 
             }
         }
 
-        // Функция для выполнения ping-запроса к заданному хосту
+
         static bool PingHost(string target)
         {
             try
@@ -59,17 +58,17 @@ namespace NetworkMonitor
             }
         }
 
-        // Функция для отправки уведомления по почте
+
         static void SendEmail(string emailFrom, string emailTo, string emailSubject, string emailBody)
         {
             try
             {
                 MailMessage message = new MailMessage(emailFrom, emailTo, emailSubject, emailBody);
-                SmtpClient client = new SmtpClient("smtp.mail.ru"); // Добавьте адрес SMTP-сервера
+                SmtpClient client = new SmtpClient("smtp.mail.ru"); 
 
-                // Задайте настройки SMTP-аутентификации при необходимости
+
                 client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential("nikitaefimenko496@mail.ru", "Efim1598745623."); // Добавьте учетные данные
+                client.Credentials = new System.Net.NetworkCredential("nikitaefimenko496@mail.ru", "Efim1598745623."); 
 
                 client.Send(message);
                 Console.WriteLine("Отправлено уведомление по электронной почте");
